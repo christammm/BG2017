@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Ball : MonoBehaviour {
+public class BallLevel2 : MonoBehaviour
+{
 
-    public  Vector2 startingVelocity = new Vector2(15, -20);
+    public Vector2 startingVelocity = new Vector2(15, -20);
     private Vector3 startingPosition;
-    public  GameObject gameOverSign;
+    public GameObject gameOverSign;
     public GameObject youWinSign;
     public Text livesValue;
     public Text pointsValue;
@@ -16,24 +17,28 @@ public class Ball : MonoBehaviour {
     public int score = 0;
     public int numBricks = 0;
 
-    void Start () {
+    void Start()
+    {
         SetLives();
         SetScore();
         youWinSign.SetActive(false);
         startingPosition = transform.position;
         GetComponent<Rigidbody2D>().velocity = startingVelocity;
-        livesValue = GameObject.Find("LivesValue").GetComponent<Text>();        
-	}
-	
+        livesValue = GameObject.Find("LivesValue").GetComponent<Text>();
+    }
+
 
 
     //Update position
-	void Update () {
-		if(transform.position.y < -4.5f) {
+    void Update()
+    {
+        if (transform.position.y < -4.5f)
+        {
             GetOut();
             SetLives();
         }
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump"))
+        {
             GetComponent<Rigidbody2D>().velocity = startingVelocity;
         }
     }
@@ -48,7 +53,8 @@ public class Ball : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity = new Vector2();
 
 
-        if (lives == 0) {
+        if (lives == 0)
+        {
             GameOver();
         }
     }
@@ -73,9 +79,23 @@ public class Ball : MonoBehaviour {
     {
         score += 500;
         SetScore();
-        var bricksLeft = FindObjectsOfType<Brick>().Length;
+        var bricksLeft = FindObjectsOfType<BrickLevel2>().Length;
 
-        if(bricksLeft == 0){
+        if (bricksLeft == 0)
+        {
+            youWinSign.SetActive(true);
+            score += 500;
+        }
+    }
+
+    public void IBeatABoss()
+    {
+        score += 500000;
+        SetScore();
+        var BossLeft = FindObjectsOfType<Boss>().Length;
+
+        if (BossLeft == 0)
+        {
             youWinSign.SetActive(true);
             score += 500;
         }

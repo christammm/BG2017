@@ -18,4 +18,13 @@ public class Paddle : MonoBehaviour {
         x = x * speed;
         rigidBody.velocity = new Vector2(x, 0);
 	}
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if(coll.gameObject.GetComponent<Boss>() == true)
+        {
+            GameObject.FindObjectOfType<BallLevel2>().GetOut();
+            GameObject.FindObjectOfType<BallLevel2>().SetLives();
+        }
+    }
 }
